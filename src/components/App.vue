@@ -2,6 +2,7 @@
 <div>
     <div id="header">
         <div>
+            <img src="../assets/logo.png">
             <h2>Vue.js Calendar</h2>
         </div>
         <div>
