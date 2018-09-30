@@ -44,9 +44,10 @@ export default {
             if (!this.description) {
                 return;
             }
-            this.$store.commit('addEvent', this.description);
-            this.description = '';
-            this.close();
+            this.$store.dispatch('addEvent', this.description).then(_ => {
+                this.description = '';
+                this.close();
+            });
         },
         enterKey() {
             this.create();

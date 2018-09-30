@@ -4,6 +4,14 @@ import './style.scss';
 import App from './components/App.vue'
 
 import store from './store';
+let events = window.__INITIAL_STATE__.map(event => {
+  return {
+    description: event.description,
+    date: moment(event.date)
+  };
+});
+let initialState = Object.assign({}, store.state, { events });
+store.replaceState(initialState);
 
 import moment from 'moment-timezone';
 moment.tz.setDefault('UTC');
