@@ -1,21 +1,43 @@
 <template>
-    <div>
-        <div v-for="day in days" v-bind:key="day">
-            {{ day }}
+<div>
+    <div id="header">
+        <div>
+            <h2>Vue.js Calendar</h2>
+        </div>
+        <div>
+            <current-month></current-month>
         </div>
     </div>
+    <div id="day-bar">
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+        <div>Sun</div>
+    </div>
+    <div id="calendar">
+        <div v-for="week in weeks" :key="week" class="calendar-week">
+            <calendar-day v-for="day in week" :key="day" :day="day"></calendar-day>
+        </div>
+    </div>
+</div>
 </template>
 
 
 <script>
+import CalendarDay from './CalendarDay.vue';
+import CurrentMonth from './CurrentMonth.vue';
+
 export default {
-  data() {
-    return {
-        month: 2,
-        year: 2017
-    };
-  },
   computed: {
+    month() {
+        return this.$store.state.currentMonth;
+    },
+    year() {
+        return this.$store.state.currentYear;
+    },
     days() {
         const SUNDAY = 0;
         const MONDAY = 1;
@@ -43,7 +65,24 @@ export default {
         }
 
         return days;
+    },
+    weeks() {
+        let weeks = [];
+        let week = [];
+
+        for (let day of this.days) {
+            week.push(day);
+            if (week.length === 7) {
+                weeks.push(week);
+                week = [];
+            }
+        }
+        return weeks;
     }
+  },
+  components: {
+      CalendarDay,
+      CurrentMonth
   }
 }
 </script>
